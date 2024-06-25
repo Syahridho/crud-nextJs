@@ -12,7 +12,7 @@ export default function Home() {
         <div className="bg-white border rounded p-8 flex justify-between  items-end">
           <input type="text" className="border p-1.5" />
           <button className="bg-slate-800 text-white px-4 py-2 rounded text-base">
-            Add Activity
+            Add Activity as
           </button>
         </div>
 

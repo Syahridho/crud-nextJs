@@ -1,20 +1,31 @@
 import { Poppins } from "next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalCreate from "./ModalCreate";
 import { Crud } from "@/types/crud.type";
 import { FaRegTrashCan, FaFilePen } from "react-icons/fa6";
 import ModalUpdate from "./ModalUpdate";
+import { conversiTime } from "@/utils/conversiTime";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 });
 
-const CrudView = () => {
+type PropTypes = {
+  crudDatas: any;
+};
+
+const CrudView = (props: PropTypes) => {
+  const { crudDatas } = props;
+
   const [crudData, setCrudData] = useState<Crud[] | undefined>([]);
   const [modalCreate, setModalCreate] = useState<Boolean | undefined>(false);
   const [modalUpdate, setModalUpdate] = useState<Crud | {}>({});
   const [modalDelete, setModalDelete] = useState<Crud | {}>({});
+
+  useEffect(() => {
+    setCrudData(crudDatas);
+  }, [crudDatas]);
   return (
     <>
       <div className={`${poppins.className} h-full`}>
@@ -40,26 +51,34 @@ const CrudView = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="border py-2">Design UI</td>
-                <td className="border py-2">jam 12:12</td>
-                <td className="border py-2">jam 14:14</td>
-                <td className="border py-2">Selesai</td>
-                <td className="border py-2 flex justify-center gap-4">
-                  <button
-                    onClick={() => setModalDelete(true)}
-                    className="p-2 bg-red-500 text-white rounded shadow"
-                  >
-                    <FaRegTrashCan />
-                  </button>
-                  <button
-                    onClick={() => setModalUpdate(true)}
-                    className="p-2 bg-blue-500 text-white rounded shadow"
-                  >
-                    <FaFilePen />
-                  </button>
-                </td>
-              </tr>
+              {crudDatas.map((crudData: any) => (
+                <tr key={crudData.id}>
+                  <td className="border py-2">{crudData.name}</td>
+                  <td className="border py-2">
+                    {conversiTime(crudData.timeStart)}
+                  </td>
+                  <td className="border py-2">
+                    {crudData.timeEnd
+                      ? conversiTime(crudData.timeEnd)
+                      : "Belum Selesai"}
+                  </td>
+                  <td className="border py-2">{crudData.status}</td>
+                  <td className="border py-2 flex justify-center gap-4">
+                    <button
+                      onClick={() => setModalDelete(crudData)}
+                      className="p-2 bg-red-500 text-white rounded shadow"
+                    >
+                      <FaRegTrashCan />
+                    </button>
+                    <button
+                      onClick={() => setModalUpdate(crudData)}
+                      className="p-2 bg-blue-500 text-white rounded shadow"
+                    >
+                      <FaFilePen />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

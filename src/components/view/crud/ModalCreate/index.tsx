@@ -6,7 +6,7 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 type Proptypes = {
   setModalCreate: Dispatch<SetStateAction<Boolean | undefined>>;
-  setCrudData: Dispatch<SetStateAction<Crud[] | undefined>>;
+  setCrudData: Dispatch<SetStateAction<Crud[]>>;
 };
 
 const ModalCreate = (props: Proptypes) => {

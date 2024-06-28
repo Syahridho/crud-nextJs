@@ -8,6 +8,16 @@ const crudServices = {
       },
     }),
   getAll: () => instance.get("/api/crud"),
+  update: (id: string, data: any) =>
+    instance.put(
+      `/api/crud/${id}`,
+      { data },
+      {
+        headers: {
+          Authorization: `Bearer Update`,
+        },
+      }
+    ),
 };
 
 export default crudServices;

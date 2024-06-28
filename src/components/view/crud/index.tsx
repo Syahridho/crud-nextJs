@@ -18,7 +18,7 @@ type PropTypes = {
 const CrudView = (props: PropTypes) => {
   const { crudDatas } = props;
 
-  const [crudData, setCrudData] = useState<Crud[] | undefined>([]);
+  const [crudData, setCrudData] = useState<Crud[]>([]);
   const [modalCreate, setModalCreate] = useState<Boolean | undefined>(false);
   const [modalUpdate, setModalUpdate] = useState<Crud | {}>({});
   const [modalDelete, setModalDelete] = useState<Crud | {}>({});
@@ -51,7 +51,7 @@ const CrudView = (props: PropTypes) => {
               </tr>
             </thead>
             <tbody>
-              {crudDatas.map((crudData: any) => (
+              {crudData.map((crudData: any) => (
                 <tr key={crudData.id}>
                   <td className="border py-2">{crudData.name}</td>
                   <td className="border py-2">
@@ -92,7 +92,7 @@ const CrudView = (props: PropTypes) => {
       {Object.keys(modalUpdate).length > 0 && (
         <ModalUpdate
           setModalUpdate={setModalUpdate}
-          updateData={crudData}
+          updateData={modalUpdate}
           setCrudData={setCrudData}
         />
       )}

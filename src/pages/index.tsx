@@ -7,7 +7,6 @@ export default function Home() {
   const getAllData = async () => {
     const { data } = await crudServices.getAll();
     setCrudData(data.data);
-    console.log(crudData);
   };
 
   useEffect(() => {

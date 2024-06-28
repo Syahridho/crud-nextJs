@@ -5,6 +5,7 @@ import { Crud } from "@/types/crud.type";
 import { FaRegTrashCan, FaFilePen } from "react-icons/fa6";
 import ModalUpdate from "./ModalUpdate";
 import { conversiTime } from "@/utils/conversiTime";
+import ModalDelete from "./ModalDelete";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -36,51 +37,54 @@ const CrudView = (props: PropTypes) => {
               className="bg-slate-800 text-white px-4 py-2 rounded text-base"
               onClick={() => setModalCreate(true)}
             >
-              Add Activity ass
+              Add Activity
             </button>
           </div>
-
-          <table className="table-auto border-collapse border text-center bg-white text-slate-800 my-4 w-full">
-            <thead>
-              <tr>
-                <th className="border py-2">Activity Name</th>
-                <th className="border py-2">Start Time</th>
-                <th className="border py-2">End Time</th>
-                <th className="border py-2">Status</th>
-                <th className="border py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {crudData.map((crudData: any) => (
-                <tr key={crudData.id}>
-                  <td className="border py-2">{crudData.name}</td>
-                  <td className="border py-2">
-                    {conversiTime(crudData.timeStart)}
-                  </td>
-                  <td className="border py-2">
-                    {crudData.timeEnd
-                      ? conversiTime(crudData.timeEnd)
-                      : "Belum Selesai"}
-                  </td>
-                  <td className="border py-2">{crudData.status}</td>
-                  <td className="border py-2 flex justify-center gap-4">
-                    <button
-                      onClick={() => setModalDelete(crudData)}
-                      className="p-2 bg-red-500 text-white rounded shadow"
-                    >
-                      <FaRegTrashCan />
-                    </button>
-                    <button
-                      onClick={() => setModalUpdate(crudData)}
-                      className="p-2 bg-blue-500 text-white rounded shadow"
-                    >
-                      <FaFilePen />
-                    </button>
-                  </td>
+          {crudData.length > 0 ? (
+            <table className="table-auto border-collapse border text-center bg-white text-slate-800 my-4 w-full">
+              <thead>
+                <tr>
+                  <th className="border py-2">Activity Name</th>
+                  <th className="border py-2">Start Time</th>
+                  <th className="border py-2">End Time</th>
+                  <th className="border py-2">Status</th>
+                  <th className="border py-2">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {crudData.map((crudData: any) => (
+                  <tr key={crudData.id}>
+                    <td className="border py-2">{crudData.name}</td>
+                    <td className="border py-2">
+                      {conversiTime(crudData.timeStart)}
+                    </td>
+                    <td className="border py-2">
+                      {crudData.timeEnd
+                        ? conversiTime(crudData.timeEnd)
+                        : "Belum Selesai"}
+                    </td>
+                    <td className="border py-2">{crudData.status}</td>
+                    <td className="border py-2 flex justify-center gap-4">
+                      <button
+                        onClick={() => setModalDelete(crudData)}
+                        className="p-2 bg-red-500 text-white rounded shadow"
+                      >
+                        <FaRegTrashCan />
+                      </button>
+                      <button
+                        onClick={() => setModalUpdate(crudData)}
+                        className="p-2 bg-blue-500 text-white rounded shadow"
+                      >
+                        <FaFilePen />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-center mt-12 text-slate-500">Data Kosong</p>
+          )}
         </div>
       </div>
       {modalCreate && (
@@ -93,6 +97,13 @@ const CrudView = (props: PropTypes) => {
         <ModalUpdate
           setModalUpdate={setModalUpdate}
           updateData={modalUpdate}
+          setCrudData={setCrudData}
+        />
+      )}
+      {Object.keys(modalDelete).length > 0 && (
+        <ModalDelete
+          setModalDelete={setModalDelete}
+          deleteData={modalDelete}
           setCrudData={setCrudData}
         />
       )}

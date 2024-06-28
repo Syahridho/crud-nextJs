@@ -18,6 +18,12 @@ const crudServices = {
         },
       }
     ),
+  delete: (id: string) =>
+    instance.delete(`/api/crud/${id}`, {
+      headers: {
+        Authorization: `Bearer Delete`,
+      },
+    }),
 };
 
 export default crudServices;

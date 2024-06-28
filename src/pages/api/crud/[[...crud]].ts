@@ -1,5 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { add, retrieveData, updateData } from "@/lib/firebase/services";
+import {
+  add,
+  deleteData,
+  retrieveData,
+  updateData,
+} from "@/lib/firebase/services";
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,6 +40,23 @@ export default async function handler(
 
     await updateData("crud", crud[0], data, (status: boolean) => {
       if (status) {
+        res.status(200).json({
+          status: true,
+          statusCode: 200,
+          message: "success",
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          statusCode: 400,
+          message: "failed",
+        });
+      }
+    });
+  } else if (req.method === "DELETE") {
+    const { crud }: any = req.query;
+    await deleteData("crud", crud[0], (result: boolean) => {
+      if (result) {
         res.status(200).json({
           status: true,
           statusCode: 200,

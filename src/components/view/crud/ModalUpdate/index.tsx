@@ -56,10 +56,10 @@ const ModalUpdate = (props: Proptypes) => {
   }, [updateData]);
   return (
     <Modal onClose={() => setModalUpdate(false)}>
-      <h1 className="font-bold text-xl">Perbarui Data</h1>
+      <h1 className="font-bold text-xl">Update Data</h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col my-2">
-          <label htmlFor="name">Aktivitas</label>
+          <label htmlFor="name">Activity</label>
           <input
             type="text"
             name="name"
@@ -70,7 +70,7 @@ const ModalUpdate = (props: Proptypes) => {
           />
         </div>
         <div className="flex flex-col my-2">
-          <label htmlFor="timeStart">Jam mulai</label>
+          <label htmlFor="timeStart">Time Start</label>
           <input
             type="datetime-local"
             name="timeStart"
@@ -81,7 +81,7 @@ const ModalUpdate = (props: Proptypes) => {
           />
         </div>
         <div>
-          <label htmlFor="checkTimeEnd">Sudah Selesai?</label>
+          <label htmlFor="checkTimeEnd">is Done?</label>
           <input
             type="checkbox"
             checked={isEnd}
@@ -91,7 +91,7 @@ const ModalUpdate = (props: Proptypes) => {
         </div>
         {isEnd && (
           <div className="flex flex-col my-2">
-            <label htmlFor="timeEnd">Jam Selesai</label>
+            <label htmlFor="timeEnd">Time End</label>
             <input
               type="datetime-local"
               name="timeEnd"
@@ -112,8 +112,8 @@ const ModalUpdate = (props: Proptypes) => {
             onChange={() => {}}
           >
             <option value="process">Proses</option>
-            <option value="done">Selesai</option>
-            <option value="cancel">Batal</option>
+            <option value="done">Done</option>
+            <option value="cancel">Cancel</option>
           </select>
         </div>
         <div className="mt-6 flex gap-2">
@@ -135,7 +135,7 @@ const ModalUpdate = (props: Proptypes) => {
             className="bg-red-500 py-1.5 px-2 text-white rounded shadow"
             onClick={() => setModalUpdate(false)}
           >
-            Batalkan
+            Cancel
           </button>
         </div>
       </form>

@@ -42,7 +42,6 @@ const ModalUpdate = (props: Proptypes) => {
       setModalUpdate(false);
       const { data } = await crudServices.getAll();
       setCrudData(data.data);
-      console.log(data.data);
     } else {
       setIsLoading(false);
       console.log("gagal");

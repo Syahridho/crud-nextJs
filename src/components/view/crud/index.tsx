@@ -29,9 +29,9 @@ const CrudView = (props: PropTypes) => {
   }, [crudDatas]);
   return (
     <>
-      <div className={`${poppins.className} h-full`}>
-        <div className="mx-auto max-w-[1000px] mt-10">
-          <div className="bg-white border rounded p-8 flex justify-between  items-end">
+      <div className={`${poppins.className} w-screen h-screen`}>
+        <div className="mx-auto md:max-w-[1000px] mt-10">
+          <div className="bg-white border w-full rounded p-8 flex justify-between items-end">
             <input type="text" className="border p-1.5" />
             <button
               className="bg-slate-800 text-white px-4 py-2 rounded text-base"
@@ -63,7 +63,21 @@ const CrudView = (props: PropTypes) => {
                         ? conversiTime(crudData.timeEnd)
                         : "Belum Selesai"}
                     </td>
-                    <td className="border py-2">{crudData.status}</td>
+                    <td className="border py-2">
+                      {crudData.status === "done" ? (
+                        <p className="bg-green-200 text-green-500 text-sm border inline border-green-500 px-3 rounded-full">
+                          Done
+                        </p>
+                      ) : crudData.status === "process" ? (
+                        <p className="bg-yellow-200 text-yellow-500 text-sm border inline border-yellow-500 px-3 rounded-full">
+                          Process
+                        </p>
+                      ) : (
+                        <p className="bg-red-200 text-red-500 text-sm border inline border-red-500 px-3 rounded-full">
+                          Cancel
+                        </p>
+                      )}
+                    </td>
                     <td className="border py-2 flex justify-center gap-4">
                       <button
                         onClick={() => setModalDelete(crudData)}

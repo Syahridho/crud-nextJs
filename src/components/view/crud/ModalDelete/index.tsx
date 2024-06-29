@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import crudServices from "@/services/crud";
 import { Crud } from "@/types/crud.type";
@@ -33,7 +34,7 @@ const ModalDelete = (props: PropTypes) => {
       <h1 className="font-bold text-xl">Sure you want to Delete Data?</h1>
       <p>{deleteData.name}</p>
       <div className="mt-6 flex gap-2">
-        <button
+        <Button
           type="button"
           className="bg-blue-500 py-1.5 px-2 text-white rounded shadow"
           onClick={() => handleDelete()}
@@ -46,14 +47,14 @@ const ModalDelete = (props: PropTypes) => {
           ) : (
             "Delete"
           )}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           className="bg-red-500 py-1.5 px-2 text-white rounded shadow"
           onClick={() => setModalDelete(false)}
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </Modal>
   );

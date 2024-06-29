@@ -3,6 +3,8 @@ import crudServices from "@/services/crud";
 import { FaCircleNotch } from "react-icons/fa6";
 import { Crud } from "@/types/crud.type";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 
 type Proptypes = {
   setModalCreate: Dispatch<SetStateAction<Boolean | undefined>>;
@@ -41,19 +43,8 @@ const ModalCreate = (props: Proptypes) => {
     <Modal onClose={() => setModalCreate(false)}>
       <h1 className="font-bold text-xl">Add Data</h1>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col my-2">
-          <label htmlFor="name">Activity</label>
-          <input type="text" name="name" id="name" className="border p-1.5" />
-        </div>
-        <div className="flex flex-col my-2">
-          <label htmlFor="timeStart">Time Start</label>
-          <input
-            type="datetime-local"
-            name="timeStart"
-            id="timeStart"
-            className="border p-1.5"
-          />
-        </div>
+        <Input title="Activity" type="text" name="name" />
+        <Input title="Time Start" type="datetime-local" name="timeStart" />
         <div>
           <label htmlFor="checkTimeEnd">is Done?</label>
           <input
@@ -64,15 +55,7 @@ const ModalCreate = (props: Proptypes) => {
           />
         </div>
         {isEnd && (
-          <div className="flex flex-col my-2">
-            <label htmlFor="timeEnd">Time End</label>
-            <input
-              type="datetime-local"
-              name="timeEnd"
-              id="timeEnd"
-              className="border p-1.5"
-            />
-          </div>
+          <Input title="Time End" type="datetime-local" name="timeEnd" />
         )}
         <div className="flex flex-col my-2">
           <label htmlFor="status">Status</label>
@@ -83,7 +66,7 @@ const ModalCreate = (props: Proptypes) => {
           </select>
         </div>
         <div className="mt-6 flex gap-2">
-          <button
+          <Button
             type="submit"
             className="bg-blue-500 py-1.5 px-2 text-white rounded shadow"
           >
@@ -95,14 +78,14 @@ const ModalCreate = (props: Proptypes) => {
             ) : (
               "Add"
             )}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             className="bg-red-500 py-1.5 px-2 text-white rounded shadow"
             onClick={() => setModalCreate(false)}
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

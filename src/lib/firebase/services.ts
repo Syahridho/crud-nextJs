@@ -4,10 +4,15 @@ import {
   collection,
   deleteDoc,
   doc,
+  endAt,
   getDoc,
   getDocs,
   getFirestore,
+  orderBy,
+  query,
+  startAt,
   updateDoc,
+  where,
 } from "firebase/firestore";
 
 const firestore = getFirestore(app);
@@ -38,6 +43,24 @@ export async function retrieveData(collectionName: string) {
 export async function retrieveDataById(collectionName: string, id: string) {
   const snapshot = await getDoc(doc(firestore, collectionName, id));
   const data = snapshot.data();
+  return data;
+}
+
+export async function retrieveDataByName(
+  collectionName: string,
+  field: string,
+  name: string
+) {
+  const keyword = name.toLowerCase();
+  const q = query(collection(firestore, collectionName));
+  const querySnapshot = await getDocs(q);
+  const data: any[] = [];
+  querySnapshot.forEach((doc) => {
+    const docData = doc.data();
+    if (docData[field].toLowerCase().includes(keyword)) {
+      data.push({ id: doc.id, ...docData });
+    }
+  });
   return data;
 }
 

@@ -1,12 +1,13 @@
 import { Poppins } from "next/font/google";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import ModalCreate from "./ModalCreate";
 import { Crud } from "@/types/crud.type";
-import { FaRegTrashCan, FaFilePen } from "react-icons/fa6";
+import { FaRegTrashCan, FaFilePen, FaCircleNotch } from "react-icons/fa6";
 import ModalUpdate from "./ModalUpdate";
 import { conversiTime } from "@/utils/conversiTime";
 import ModalDelete from "./ModalDelete";
 import Button from "@/components/ui/Button";
+import { getSearch } from "@/services/search";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,15 +16,27 @@ const poppins = Poppins({
 
 type PropTypes = {
   crudDatas: any;
+  isLoading: boolean;
 };
 
 const CrudView = (props: PropTypes) => {
-  const { crudDatas } = props;
+  const { crudDatas, isLoading } = props;
 
   const [crudData, setCrudData] = useState<Crud[]>([]);
   const [modalCreate, setModalCreate] = useState<Boolean | undefined>(false);
   const [modalUpdate, setModalUpdate] = useState<Crud | {}>({});
   const [modalDelete, setModalDelete] = useState<Crud | {}>({});
+
+  const handleSearch = async (event: any) => {
+    const results = await getSearch(event)
+      .then((result) => {
+        setCrudData(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(results);
+  };
 
   useEffect(() => {
     setCrudData(crudDatas);
@@ -33,7 +46,13 @@ const CrudView = (props: PropTypes) => {
       <div className={`${poppins.className} w-screen h-screen`}>
         <div className="mx-auto  max-w-[1000px] p-2">
           <div className="bg-white border w-full rounded p-8 flex flex-col items-start gap-4 sm:justify-between sm:items-center sm:flex-row">
-            <input type="text" className="border p-1.5" />
+            <input
+              type="text"
+              name="search"
+              className="border p-1.5"
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+
             <Button
               type="button"
               className="bg-slate-800 text-white rounded text-base px-2 py-1.5"
@@ -42,7 +61,11 @@ const CrudView = (props: PropTypes) => {
               Add Activity
             </Button>
           </div>
-          {crudData.length > 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center items-center mt-12">
+              <FaCircleNotch className="animate-spin text-slate-400" />
+            </div>
+          ) : crudData.length > 0 ? (
             <table className="border-collapse border text-center bg-white text-slate-800 my-4 w-full">
               <thead>
                 <tr>
